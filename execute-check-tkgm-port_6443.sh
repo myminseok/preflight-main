@@ -1,0 +1,2 @@
+#preflight execute tkgm --check=port_6443_open_from_bootstrap_to_management_cluster --port-to-check=6443 --management-cluster-net-machine=192.168.0.158 --ssh-private-key-path=../jumpbox_root_id_rsa --ssh-username=capv
+preflight execute tkgm --check=port_6443_open_from_bootstrap_to_management_cluster --port-to-check=6443 --management-cluster-net-machine=127.0.0.1 --ssh-private-key-path=../jumpbox_root_id_rsa --ssh-username=kminseok

@@ -1,0 +1,60 @@
+---
+products:
+  - name: tanzu_todo_list
+    friendly_name: Tanzu Todo List
+    aliases:
+    - todo
+    - ttl
+    checks:
+      - name: database_connectivity_check
+        description: Ensure that we can reach our database
+        checksum:
+          darwin-arm64: cb8575cddd8be0d623ebc0791fd0472f
+        machine_flags:
+        - name: database
+          description: The hostname of the database we're checking!
+         # requires_credentials: true
+  - name: tanzu_kubernetes_grid_multicloud
+    friendly_name: Tanzu Kubernetes Grid Multicloud
+    aliases:
+      - tkgm
+    checks:
+      - name: bootstrap_machine_has_enough_resources
+        description: Bootstrap machine (i.e. this machine) has enough CPU and free memory.
+        checksum:
+          darwin-arm64: 78a878e4f195f83b33c866a9b4357e54
+          linux-amd64: 78a878e4f195f83b33c866a9b4357e54
+      - name: port_6443_open_from_bootstrap_to_management_clusters
+        description: tcp/6443 open on management network segment
+        checksum:
+          darwin-arm64: 8eeb83c5c648cdae2cd5be35850e585f
+          linux-amd64: 8eeb83c5c648cdae2cd5be35850e585f
+        machine_flags:
+          - name: management-cluster-net-machine
+            description: A test machine in the management cluster subnet
+        required_flags:
+          - name: port-to-check
+            description: "Port to check if not 6443"
+      - name: docker_installed
+        description: Docker installed on all machines
+        checksum:
+          darwin-arm64: 716d88337d54947f106b69fc370a342c
+          linux-amd64: 716d88337d54947f106b69fc370a342c
+        prerequisites:
+          - docker
+          - ruby
+        machine_flags:
+          - name: management-cluster-net-machine
+            description: A test machine in the management cluster subnet
+          - name: workload-cluster-net-machine
+            description: A test machine in the workload cluster subnet
+        optional_flags:
+          - name: docker-registry-url
+            description: A URL to a Docker registry if not testing Docker Hub
+            accepts_value: true
+          - name: docker-registry-username
+            description: The username to the Docker registry
+            accepts_value: true
+          - name: docker-registry-password
+            description: The password to the Docker registry
+            accepts_value: true
